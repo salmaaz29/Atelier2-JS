@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            display: flex;
+            justify-content: center;  /* Centre horizontalement */
+            align-items: center;      /* Centre verticalement */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+                
+        }
+        div{
+            margin: 20px;
+        }
+        button{
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #646161;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="sauvegarder_donnees(event)">
+        <div class="container">
+            <div>
+                <label for="nom">Nom</label>
+            <input type="text" id="nom">
+            </div>
+            <div>
+                <label for="prenom">Prenom</label>
+            <input type="text" id="prenom">
+            </div>
+            <div>
+                <label for="email">Email</label>
+            <input type="text" id="email">
+            </div>
+            
+            <button type="submit">S'inscrire</button>
+
+        </div>
+    </form>
+
+    <script>
+// recuperer les elemens du formulaire 
+function sauvegarder_donnees(event) {
+    event.preventDefault(); // Empêcher le rechargement de la page
+
+    // Récupérer les valeurs des champs
+    let nom = document.getElementById('nom').value.trim();
+    let prenom = document.getElementById('prenom').value.trim();
+    let email = document.getElementById('email').value.trim();
+
+    if (nom === '' || prenom === '' || email === '') {
+        alert('Veuillez remplir tous les champs');
+    } else {
+        // Récupérer les utilisateurs déjà enregistrés
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        // Vérifier que users est bien un tableau
+        if (!Array.isArray(users)) {
+            users = [];
+        }
+
+        // Vérifier si l'utilisateur existe déjà
+        let existingUser = users.find(u => u.email === email);
+        if (existingUser) {
+            alert("Cet email est déjà utilisé !");
+            return;
+        }
+
+        // Créer un nouvel utilisateur avec `isLoggedIn: false`
+        let user = {
+            nom: nom,
+            prenom: prenom,
+            email: email,
+            isLoggedIn: false // Ajout du statut de connexion
+        };
+
+        users.push(user); // Ajouter le nouvel utilisateur
+        localStorage.setItem("users", JSON.stringify(users)); // Sauvegarder les données
+
+        alert('Utilisateur enregistré avec succès.');
+        window.location.href = 'login.html'; // Rediriger vers la page de connexion
+    }
+}
+
+    </script>
+</body>
+</html>

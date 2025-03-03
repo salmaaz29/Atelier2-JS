@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            display: flex;
+            justify-content: center;  /* Centre horizontalement */
+            align-items: center;      /* Centre verticalement */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+                
+        }
+        div{
+            margin: 20px;
+        }
+        button{
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 10px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #646161;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="verifier_user(event)">
+        <div class="container">
+            <div>
+                <label for="nom">Nom</label>
+            <input type="text" id="nom">
+            </div>
+            <div>
+                <label for="email">Email</label>
+            <input type="text" id="email">
+            </div>
+            
+            <button type="submit">Login</button>
+            <p style="color:red">Vous n' etes pas inscrit </p> 
+            <a href="sign_up.html" style="color:blue">s'inscrire</a>
+
+        </div>
+    </form>
+    <script>
+// recuperer les elemens du formulaire 
+function verifier_user(event){
+    event.preventDefault(); // Empêcher le rechargement de la page
+
+    let nom = document.getElementById('nom').value.trim();
+    let email = document.getElementById('email').value.trim();
+
+    if(nom === '' || email === ''){
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+
+    // Vérifier les utilisateurs enregistrés
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    console.log("Utilisateurs enregistrés:", users);
+
+    let user = users.find(u => u.nom === nom && u.email === email);
+    console.log("Utilisateur trouvé:", user);
+
+    if (user) {
+        alert('Bienvenue ' + user.prenom);
+
+        // Sauvegarde de l'utilisateur connecté
+        localStorage.setItem("user", JSON.stringify(user));
+
+        window.location.href = 'home.html';
+    } else {
+        alert('Utilisateur non trouvé');
+    }
+}
+
+    </script>
+</body>
+</html>
