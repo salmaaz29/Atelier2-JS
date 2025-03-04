@@ -52,7 +52,7 @@ cne : Code national étudiant.
 Méthode associée :
 etudier() : Affiche un message indiquant que l’étudiant est en train d’étudier.
 
-3) Objet Professeur :
+2) Objet Professeur :
 Cet objet représente un professeur avec les propriétés suivantes  :
 nom : Nom du professeur.
 age : Âge du professeur.
